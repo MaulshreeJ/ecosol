@@ -16,7 +16,7 @@ export default function Navbar() {
       position: "fixed", top: 0, left: 0, right: 0, zIndex: 300,
       height: 68, display: "flex", alignItems: "center", justifyContent: "space-between",
       padding: "0 5%",
-      background: scrolled ? "rgba(5,14,26,0.97)" : "rgba(5,14,26,0.8)",
+      background: scrolled ? "rgba(6,15,28,0.98)" : "rgba(6,15,28,0.8)",
       backdropFilter: "blur(20px)",
       borderBottom: scrolled ? "1px solid rgba(255,255,255,0.07)" : "1px solid transparent",
       transition: "background 0.3s, border-bottom 0.3s",

@@ -1,18 +1,19 @@
 @import "tailwindcss";
 
 :root {
-  --bg: #050e1a;
+  --bg: #060f1c;
   --bg2: #0a1628;
   --green: #2E7D4F;
   --teal: #3A9E7A;
-  --teal2: #3db882;
-  --blue: #1F4E8C;
+  --teal2: #2E7D4F;
+  --blue: #163A6E;
   --border: rgba(255,255,255,0.08);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 body { background: var(--bg); color: #fff; overflow-x: hidden; font-family: 'Montserrat', sans-serif; }
+
 ::-webkit-scrollbar { width: 3px; }
 ::-webkit-scrollbar-thumb { background: var(--teal); border-radius: 2px; }
 @keyframes blobFloat { 0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(25px,-15px) scale(1.05)} }

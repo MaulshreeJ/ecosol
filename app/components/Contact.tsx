@@ -18,7 +18,7 @@ export default function Contact() {
 
   return (
     <section id="contact" style={{background:"#0a1628",padding:"100px 5%",position:"relative",overflow:"hidden"}}>
-      <div style={{position:"absolute",bottom:-200,left:-200,width:500,height:500,borderRadius:"50%",background:"radial-gradient(circle,rgba(46,125,79,0.08),transparent 70%)",filter:"blur(40px)"}}/>
+      <div style={{position:"absolute",bottom:-200,left:-200,width:500,height:500,borderRadius:"50%",background:"radial-gradient(circle,rgba(46,125,79,0.06),transparent 70%)",filter:"blur(40px)"}}/>
       <div style={{display:"grid",gridTemplateColumns:"1fr 1.1fr",gap:72,alignItems:"start",position:"relative",zIndex:2}}>
         {/* Left */}
         <div>
@@ -26,9 +26,7 @@ export default function Contact() {
           <h2 style={{fontSize:"clamp(26px,3.2vw,42px)",fontWeight:800,letterSpacing:"-0.03em",color:"#fff",lineHeight:1.12,marginBottom:16}}>Let's build intelligent sustainability.</h2>
           <p style={{fontSize:15,color:"rgba(255,255,255,0.45)",lineHeight:1.8,maxWidth:480,marginBottom:24}}>Whether you're exploring ESG compliance, energy optimization, or a full AI deployment — start with a conversation. We respond within 24 hours.</p>
           {[
-            {ico:"✉️",text:"info@ecosoltech.in",href:"mailto:info@ecosoltech.in"},
-            {ico:"📨",text:"contact@ecosoltech.in",href:"mailto:contact@ecosoltech.in"},
-            {ico:"📍",text:"India · Remote-first · Globally available",href:null},
+            {ico:"✉️",text:"contact@ecosoltechnologies.com",href:"mailto:contact@ecosoltechnologies.com"},
           ].map((d,i)=>(
             <a key={i} href={d.href||"#"} style={{
               display:"flex",alignItems:"center",gap:12,padding:"13px 15px",
