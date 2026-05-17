@@ -4,11 +4,22 @@ export default function Footer() {
     { title:"What We Do", links:[["#ribbon","Capabilities"],["#services","Services"],["#whatwedo","Industries"],["#process","Process"]] },
     { title:"Services", links:[["#services","ESG Intelligence"],["#services","AI Optimization"],["#services","Regulatory Advisory"],["#services","Analytics Platform"]] },
     { title:"Industries", links:[["#whatwedo","Manufacturing"],["#whatwedo","Energy & Utilities"],["#whatwedo","Infrastructure"],["#whatwedo","Government"]] },
-    { title:"Company", links:[["#contact","Contact Us"],["mailto:info@ecosoltech.in","info@ecosoltech.in"],["#","Careers"],["#","About Us"]] },
+    { title:"Company", links:[["#contact","Contact Us"],["mailto:contact@ecosoltechnologies.com","contact@ecosoltechnologies.com"],["#","Careers"],["#","About Us"]] },
   ];
   return (
     <footer style={{background:"#020810",padding:"60px 5% 30px",borderTop:"1px solid rgba(255,255,255,0.04)"}}>
-      <div style={{display:"grid",gridTemplateColumns:"2fr 1fr 1fr 1fr 1fr",gap:44,paddingBottom:44,borderBottom:"1px solid rgba(255,255,255,0.05)"}}>
+      <style>{`
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr; gap: 44px; padding-bottom: 44px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 26px; font-size: 12px; color: rgba(255,255,255,0.2); flex-wrap: wrap; gap: 12px; }
+        @media (max-width: 900px) {
+          .footer-grid { grid-template-columns: 1fr 1fr !important; gap: 32px !important; }
+        }
+        @media (max-width: 480px) {
+          .footer-grid { grid-template-columns: 1fr !important; }
+          .footer-bottom { flex-direction: column; text-align: center; }
+        }
+      `}</style>
+      <div className="footer-grid">
         {/* Brand */}
         <div>
           <div style={{fontSize:20,fontWeight:700,marginBottom:4}}>
@@ -42,9 +53,9 @@ export default function Footer() {
           </div>
         ))}
       </div>
-      <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",paddingTop:26,fontSize:12,color:"rgba(255,255,255,0.2)",flexWrap:"wrap",gap:12}}>
+      <div className="footer-bottom">
         <div>© 2025 EcoSol Technologies Pvt. Ltd. All rights reserved.</div>
-        <div style={{display:"flex",gap:20}}>
+        <div style={{display:"flex",gap:20,flexWrap:"wrap",justifyContent:"center"}}>
           {["Privacy Policy","Terms","Cookie Policy"].map(l=>(
             <a key={l} href="#" style={{color:"rgba(255,255,255,0.28)",textDecoration:"none",transition:"color 0.2s"}}
               onMouseEnter={e=>e.currentTarget.style.color="#3A9E7A"}

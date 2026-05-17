@@ -43,9 +43,15 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" style={{background:"#0a1628",padding:"100px 5%",position:"relative",overflow:"hidden"}}>
+    <section id="contact" style={{background:"#0a1628",padding:"80px 5%",position:"relative",overflow:"hidden"}}>
+      <style>{`
+        .contact-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 72px; align-items: start; }
+        @media (max-width: 768px) {
+          .contact-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
+        }
+      `}</style>
       <div style={{position:"absolute",bottom:-200,left:-200,width:500,height:500,borderRadius:"50%",background:"radial-gradient(circle,rgba(46,125,79,0.06),transparent 70%)",filter:"blur(40px)"}}/>
-      <div style={{display:"grid",gridTemplateColumns:"1fr 1.1fr",gap:72,alignItems:"start",position:"relative",zIndex:2}}>
+      <div className="contact-grid" style={{position:"relative",zIndex:2}}>
         {/* Left */}
         <div>
           <div style={{fontSize:11,fontWeight:600,letterSpacing:"0.22em",textTransform:"uppercase",color:"#3A9E7A",marginBottom:13}}>Contact</div>
@@ -78,26 +84,26 @@ export default function Contact() {
             <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12,marginBottom:0}}>
               <div style={{marginBottom:13}}>
                 <label style={{display:"block",fontSize:10,fontWeight:700,letterSpacing:"0.09em",textTransform:"uppercase",color:"rgba(255,255,255,0.3)",marginBottom:6}}>Full Name</label>
-                <input name="name" type="text" placeholder="Your name" required style={inputStyle}
+                <input suppressHydrationWarning name="name" type="text" placeholder="Your name" required style={inputStyle}
                   onFocus={e=>{e.target.style.borderColor="rgba(58,158,122,0.4)";e.target.style.transform="scale(1)"}}
                   onBlur={e=>{e.target.style.borderColor="rgba(255,255,255,0.1)";e.target.style.transform="scale(0.98)"}}/>
               </div>
               <div style={{marginBottom:13}}>
                 <label style={{display:"block",fontSize:10,fontWeight:700,letterSpacing:"0.09em",textTransform:"uppercase",color:"rgba(255,255,255,0.3)",marginBottom:6}}>Company</label>
-                <input name="company" type="text" placeholder="Organisation" required style={inputStyle}
+                <input suppressHydrationWarning name="company" type="text" placeholder="Organisation" required style={inputStyle}
                   onFocus={e=>{e.target.style.borderColor="rgba(58,158,122,0.4)";e.target.style.transform="scale(1)"}}
                   onBlur={e=>{e.target.style.borderColor="rgba(255,255,255,0.1)";e.target.style.transform="scale(0.98)"}}/>
               </div>
             </div>
             <div style={{marginBottom:13}}>
               <label style={{display:"block",fontSize:10,fontWeight:700,letterSpacing:"0.09em",textTransform:"uppercase",color:"rgba(255,255,255,0.3)",marginBottom:6}}>Email</label>
-              <input name="email" type="email" placeholder="you@company.com" required style={inputStyle}
+              <input suppressHydrationWarning name="email" type="email" placeholder="you@company.com" required style={inputStyle}
                 onFocus={e=>{e.target.style.borderColor="rgba(58,158,122,0.4)";e.target.style.transform="scale(1)"}}
                 onBlur={e=>{e.target.style.borderColor="rgba(255,255,255,0.1)";e.target.style.transform="scale(0.98)"}}/>
             </div>
             <div style={{marginBottom:13}}>
               <label style={{display:"block",fontSize:10,fontWeight:700,letterSpacing:"0.09em",textTransform:"uppercase",color:"rgba(255,255,255,0.3)",marginBottom:6}}>Service Interest</label>
-              <select name="service" style={{...inputStyle,cursor:"pointer"}}
+              <select suppressHydrationWarning name="service" style={{...inputStyle,cursor:"pointer"}}
                 onFocus={e=>{e.target.style.borderColor="rgba(58,158,122,0.4)";e.target.style.transform="scale(1)"}}
                 onBlur={e=>{e.target.style.borderColor="rgba(255,255,255,0.1)";e.target.style.transform="scale(0.98)"}}>
                 <option value="">Select</option>
@@ -115,7 +121,7 @@ export default function Contact() {
                 onBlur={e=>{e.target.style.borderColor="rgba(255,255,255,0.1)";e.target.style.transform="scale(0.98)"}}/>
             </div>
             {error && <p style={{color:"#ff6b6b",fontSize:13,marginBottom:12,textAlign:"center"}}>{error}</p>}
-            <button type="submit" disabled={sent} style={{
+            <button suppressHydrationWarning type="submit" disabled={sent} style={{
               width:"100%",padding:14,background:sent?"#2E7D4F":"#3A9E7A",color:"#fff",
               border:"none",borderRadius:8,cursor:sent?"wait":"pointer",fontFamily:"inherit",
               fontSize:14,fontWeight:800,letterSpacing:"0.04em",textTransform:"uppercase",

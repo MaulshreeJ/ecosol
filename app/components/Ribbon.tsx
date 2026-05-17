@@ -42,7 +42,7 @@ export default function Ribbon() {
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
           {[-1, 1].map((dir, i) => (
-            <button key={i} onClick={() => go(cur + dir)} style={{
+            <button suppressHydrationWarning key={i} onClick={() => go(cur + dir)} style={{
               width: 42, height: 42, borderRadius: "50%", border: "1px solid rgba(255,255,255,0.12)",
               background: "rgba(255,255,255,0.04)", backdropFilter: "blur(8px)",
               display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer",
@@ -54,7 +54,7 @@ export default function Ribbon() {
           ))}
           <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
             {cards.map((_, i) => (
-              <button key={i} onClick={() => go(i)} style={{
+              <button suppressHydrationWarning key={i} onClick={() => go(i)} style={{
                 width: i === cur ? 18 : 6, height: 6, borderRadius: i === cur ? 3 : "50%",
                 background: i === cur ? "#3A9E7A" : "rgba(255,255,255,0.15)",
                 border: "none", padding: 0, cursor: "pointer", transition: "all 0.3s"
