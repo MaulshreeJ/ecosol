@@ -44,12 +44,6 @@ export default function Contact() {
 
   return (
     <section id="contact" style={{background:"#0a1628",padding:"80px 5%",position:"relative",overflow:"hidden"}}>
-      <style>{`
-        .contact-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 72px; align-items: start; }
-        @media (max-width: 768px) {
-          .contact-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
-        }
-      `}</style>
       <div style={{position:"absolute",bottom:-200,left:-200,width:500,height:500,borderRadius:"50%",background:"radial-gradient(circle,rgba(46,125,79,0.06),transparent 70%)",filter:"blur(40px)"}}/>
       <div className="contact-grid" style={{position:"relative",zIndex:2}}>
         {/* Left */}

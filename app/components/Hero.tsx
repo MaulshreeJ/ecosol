@@ -14,17 +14,6 @@ export default function Hero() {
 
   return (
     <>
-      <style>{`
-        .hero-eyebrow { white-space: nowrap; }
-        .hero-stats { display: flex; align-items: center; justify-content: center; margin-top: 60px; }
-        @media (max-width: 600px) {
-          .hero-eyebrow { white-space: normal !important; text-align: center; }
-          .hero-stats { flex-direction: column; gap: 20px; margin-top: 40px; }
-          .hero-stat-divider { display: none !important; }
-          .hero-stat-item { padding: 0 !important; }
-        }
-      `}</style>
-
       <section id="hero" style={{
         minHeight: "100vh", position: "relative", overflow: "hidden",
         display: "flex", alignItems: "center", justifyContent: "center",

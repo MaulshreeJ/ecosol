@@ -18,10 +18,6 @@ export default function Process() {
   const fwView = useInView();
   return (
     <section id="process" style={{background:"#050e1a",padding:"80px 5%",position:"relative"}}>
-      <style>{`
-        .process-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 80px; align-items: center; }
-        @media (max-width: 900px) { .process-grid { grid-template-columns: 1fr !important; gap: 48px !important; } }
-      `}</style>
       <div className="process-grid">
         <div>
           <div style={{fontSize:11,fontWeight:600,letterSpacing:"0.22em",textTransform:"uppercase",color:"#3A9E7A",marginBottom:13}}>How We Work</div>

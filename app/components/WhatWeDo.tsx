@@ -162,11 +162,7 @@ export default function WhatWeDo() {
           color: #3A9E7A;
           border-bottom: 2px solid #3A9E7A;
         }
-        .wwd-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 20px; }
-        @media (max-width: 1024px) { .wwd-grid { grid-template-columns: repeat(2,1fr) !important; } }
-        @media (max-width: 560px) { .wwd-grid { grid-template-columns: 1fr !important; } }
-        .wwd-icon-svg svg {
-          width: 22px;
+        .wwd-icon-svg svg {          width: 22px;
           height: 22px;
           stroke: #3A9E7A;
           stroke-width: 1.5px;

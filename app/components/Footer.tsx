@@ -8,17 +8,6 @@ export default function Footer() {
   ];
   return (
     <footer style={{background:"#020810",padding:"60px 5% 30px",borderTop:"1px solid rgba(255,255,255,0.04)"}}>
-      <style>{`
-        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr; gap: 44px; padding-bottom: 44px; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        .footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 26px; font-size: 12px; color: rgba(255,255,255,0.2); flex-wrap: wrap; gap: 12px; }
-        @media (max-width: 900px) {
-          .footer-grid { grid-template-columns: 1fr 1fr !important; gap: 32px !important; }
-        }
-        @media (max-width: 480px) {
-          .footer-grid { grid-template-columns: 1fr !important; }
-          .footer-bottom { flex-direction: column; text-align: center; }
-        }
-      `}</style>
       <div className="footer-grid">
         {/* Brand */}
         <div>

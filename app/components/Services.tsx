@@ -23,11 +23,6 @@ export default function Services() {
   const { ref, inView } = useInView();
   return (
     <section id="services" style={{background:"#0a1628",padding:"80px 5%",position:"relative",overflow:"hidden"}}>
-      <style>{`
-        .services-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
-        @media (max-width: 900px) { .services-grid { grid-template-columns: 1fr 1fr !important; } }
-        @media (max-width: 560px) { .services-grid { grid-template-columns: 1fr !important; } }
-      `}</style>
       <div style={{position:"absolute",top:-200,right:-200,width:500,height:500,borderRadius:"50%",background:"radial-gradient(circle,rgba(31,78,140,0.1),transparent 70%)",filter:"blur(40px)"}}/>
       <div style={{position:"relative",zIndex:2}}>
         <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-end",marginBottom:40,gap:24,flexWrap:"wrap"}}>

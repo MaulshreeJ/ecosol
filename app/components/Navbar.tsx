@@ -15,17 +15,6 @@ export default function Navbar() {
 
   return (
     <>
-      <style>{`
-        @media (max-width: 768px) {
-          .nav-desktop { display: none !important; }
-          .nav-hamburger { display: flex !important; }
-        }
-        @media (min-width: 769px) {
-          .nav-mobile-menu { display: none !important; }
-          .nav-hamburger { display: none !important; }
-        }
-      `}</style>
-
       <nav style={{
         position: "fixed", top: 0, left: 0, right: 0, zIndex: 300,
         height: 68, display: "flex", alignItems: "center", justifyContent: "space-between",

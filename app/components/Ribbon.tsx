@@ -15,23 +15,61 @@ const cards = [
 export default function Ribbon() {
   const [cur, setCur] = useState(0);
   const trackRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
-  const CARD_W = 320;
+  const [cardW, setCardW] = useState(300);
+
+  // Calculate card width based on container
+  useEffect(() => {
+    const updateCardW = () => {
+      if (containerRef.current) {
+        const vw = containerRef.current.offsetWidth;
+        // On mobile: nearly full width. On desktop: 320px fixed.
+        setCardW(vw < 500 ? vw - 40 : 320);
+      }
+    };
+    updateCardW();
+    window.addEventListener("resize", updateCardW);
+    return () => window.removeEventListener("resize", updateCardW);
+  }, []);
 
   const go = (i: number) => {
     const idx = ((i % cards.length) + cards.length) % cards.length;
     setCur(idx);
     if (trackRef.current) {
-      trackRef.current.style.transform = `translateX(-${idx * (CARD_W + 20)}px)`;
+      trackRef.current.style.transform = `translateX(-${idx * (cardW + 20)}px)`;
     }
   };
 
-  const startTimer = () => { timerRef.current = setInterval(() => setCur(c => { const next = (c + 1) % cards.length; go(next); return next; }), 3500); };
+  // Re-apply transform when cardW changes
+  useEffect(() => {
+    if (trackRef.current) {
+      trackRef.current.style.transform = `translateX(-${cur * (cardW + 20)}px)`;
+    }
+  }, [cardW, cur]);
+
+  const startTimer = () => {
+    timerRef.current = setInterval(() => {
+      setCur(c => {
+        const next = (c + 1) % cards.length;
+        if (trackRef.current) {
+          trackRef.current.style.transform = `translateX(-${next * (cardW + 20)}px)`;
+        }
+        return next;
+      });
+    }, 3500);
+  };
   const stopTimer = () => { if (timerRef.current) clearInterval(timerRef.current); };
-  useEffect(() => { startTimer(); return stopTimer; }, []);
+  useEffect(() => { startTimer(); return stopTimer; }, [cardW]);
 
   return (
-    <section id="ribbon" style={{ background: "#050e1a", padding: "80px 0 88px", borderTop: "1px solid rgba(255,255,255,0.07)", overflow: "hidden", position: "relative" }}>
+    <section id="ribbon" style={{
+      background: "#050e1a", padding: "80px 0 88px",
+      borderTop: "1px solid rgba(255,255,255,0.07)",
+      overflow: "hidden", position: "relative",
+      // Critical: prevent this section from causing horizontal scroll
+      maxWidth: "100vw",
+    }}>
       <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse 60% 80% at 50% 50%,rgba(46,125,79,0.05) 0%,transparent 70%)" }} />
 
       {/* Header */}
@@ -64,14 +102,23 @@ export default function Ribbon() {
         </div>
       </div>
 
-      {/* Track */}
-      <div style={{ overflow: "hidden", padding: "0 5% 16px", position: "relative", zIndex: 2 }}
-        onMouseEnter={stopTimer} onMouseLeave={startTimer}>
+      {/* Track container — clips overflow */}
+      <div
+        ref={containerRef}
+        style={{ overflow: "hidden", padding: "0 5% 16px", position: "relative", zIndex: 2 }}
+        onMouseEnter={stopTimer}
+        onMouseLeave={startTimer}
+      >
         <div ref={trackRef} style={{ display: "flex", gap: 20, transition: "transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1)" }}>
           {cards.map((c, i) => (
-            <div key={i} onClick={() => go(i)} className="ribbon-card" style={{
-              flexShrink: 0, width: CARD_W, height: 390, borderRadius: 20, overflow: "hidden",
-              position: "relative", cursor: "pointer",
+            <div key={i} onClick={() => go(i)} style={{
+              flexShrink: 0,
+              width: cardW,
+              height: 390,
+              borderRadius: 20,
+              overflow: "hidden",
+              position: "relative",
+              cursor: "pointer",
               background: "rgba(255,255,255,0.04)",
               border: `1px solid ${i === cur ? "rgba(58,158,122,0.25)" : "rgba(255,255,255,0.08)"}`,
               backdropFilter: "blur(12px)",
@@ -79,37 +126,26 @@ export default function Ribbon() {
               boxShadow: i === cur ? "0 24px 64px rgba(0,0,0,0.4)" : "none",
               transition: "all 0.4s cubic-bezier(0.4,0,0.2,1)",
             }}>
-              {/* Image Background */}
               <div style={{
                 position: "absolute", inset: 0,
                 backgroundImage: `url('/images/card-${i + 1}.png')`,
                 backgroundSize: "cover", backgroundPosition: "center", zIndex: 0,
                 filter: "grayscale(30%) brightness(0.65)"
               }} />
-              {/* Glow */}
-              <div className={i === cur ? "anim-breathe" : ""} style={{ position: "absolute", width: 180, height: 180, borderRadius: "50%", filter: "blur(40px)", top: -40, right: -40, background: c.glow, opacity: i === cur ? 0.5 : 0.2, transition: "opacity 0.4s", zIndex: 1 }} />
-
-              {/* Frosted Glass Text Panel */}
+              <div style={{ position: "absolute", width: 180, height: 180, borderRadius: "50%", filter: "blur(40px)", top: -40, right: -40, background: c.glow, opacity: i === cur ? 0.5 : 0.2, transition: "opacity 0.4s", zIndex: 1 }} />
               <div style={{
                 position: "absolute", top: 140, bottom: 0, left: 0, right: 0, zIndex: 1,
                 background: "linear-gradient(to bottom, rgba(6,15,28,0.3) 0%, rgba(6,15,28,0.95) 100%)",
-                backdropFilter: "blur(3px)", WebkitBackdropFilter: "blur(3px)",
-                borderTop: "0px solid rgba(255,255,255,0.06)"
               }} />
-
-              {/* Content */}
               <div style={{ padding: "160px 26px 0", position: "relative", zIndex: 2 }}>
                 <div style={{ fontSize: 9.5, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "#3A9E7A", marginBottom: 8 }}>{c.tag}</div>
                 <div style={{ fontSize: 17, fontWeight: 800, color: "rgba(255,255,255,0.9)", letterSpacing: "-0.02em", lineHeight: 1.25, marginBottom: 8 }}>{c.title}</div>
                 <p style={{ fontSize: 12, color: "rgba(255,255,255,0.55)", lineHeight: 1.65 }}>{c.desc}</p>
               </div>
-
-              {/* Bottom stat */}
               <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "16px 26px 22px", borderTop: "1px solid rgba(255,255,255,0.04)", background: "rgba(6,15,28,0.4)", zIndex: 3 }}>
                 <div style={{ fontSize: 20, fontWeight: 900, color: "#3A9E7A", letterSpacing: "-0.02em" }}>{c.stat}</div>
                 <div style={{ fontSize: 10, fontWeight: 600, color: "rgba(255,255,255,0.4)", letterSpacing: "0.08em", textTransform: "uppercase", marginTop: 2 }}>{c.statL}</div>
               </div>
-              {/* Accent bar */}
               <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 2, background: c.bar, opacity: i === cur ? 1 : 0, transition: "opacity 0.3s", zIndex: 3 }} />
             </div>
           ))}

@@ -35,13 +35,8 @@ export default function Stats() {
   ];
   return (
     <section id="stats" style={{background:"linear-gradient(135deg,#061220 0%,#0a1e14 50%,#061220 100%)",padding:"80px 5%",position:"relative",overflow:"hidden"}}>
-      <style>{`
-        .stats-grid { display: grid; grid-template-columns: repeat(4,1fr); position: relative; z-index: 2; }
-        @media (max-width: 768px) { .stats-grid { grid-template-columns: repeat(2,1fr) !important; gap: 32px 0; } }
-        @media (max-width: 400px) { .stats-grid { grid-template-columns: 1fr !important; } }
-      `}</style>
       <div style={{position:"absolute",inset:0,background:"radial-gradient(ellipse 70% 80% at 50% 50%,rgba(46,125,79,0.1) 0%,transparent 70%)"}}/>
-      <div ref={ref} className="stats-grid">
+      <div ref={ref} className="stats-grid" style={{position:"relative",zIndex:2}}>
         {stats.map((s,i)=>(
           <div key={i} style={{padding:`0 ${i===0?0:36}px`,borderRight:i<3?"1px solid rgba(255,255,255,0.06)":"none"}}>
             <div style={{fontSize:50,fontWeight:900,letterSpacing:"-0.04em",lineHeight:1,color:"#fff",marginBottom:10}}>
