@@ -1,12 +1,38 @@
 "use client";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 export default function Contact() {
   const [sent, setSent] = useState(false);
-  const handleSubmit = (e: React.FormEvent) => {
+  const [error, setError] = useState("");
+  const formRef = useRef<HTMLFormElement>(null);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setError("");
+    const form = e.currentTarget;
+    const data = {
+      name: (form.elements.namedItem("name") as HTMLInputElement).value,
+      company: (form.elements.namedItem("company") as HTMLInputElement).value,
+      email: (form.elements.namedItem("email") as HTMLInputElement).value,
+      service: (form.elements.namedItem("service") as HTMLSelectElement).value,
+      message: (form.elements.namedItem("message") as HTMLTextAreaElement).value,
+    };
+
     setSent(true);
-    setTimeout(() => setSent(false), 3000);
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      const json = await res.json();
+      if (!res.ok) throw new Error(json.error || "Failed");
+      formRef.current?.reset();
+      setTimeout(() => setSent(false), 4000);
+    } catch (err: any) {
+      setError(err.message || "Something went wrong. Please try again.");
+      setSent(false);
+    }
   };
 
   const inputStyle: React.CSSProperties = {
@@ -48,30 +74,30 @@ export default function Contact() {
         <div style={{background:"rgba(255,255,255,0.03)",border:"1px solid rgba(255,255,255,0.08)",borderRadius:20,padding:40,backdropFilter:"blur(16px)",boxShadow:"0 24px 64px rgba(0,0,0,0.2)"}}>
           <div style={{fontSize:18,fontWeight:800,color:"#fff",marginBottom:5,letterSpacing:"-0.02em"}}>Request a consultation</div>
           <p style={{fontSize:13,color:"rgba(255,255,255,0.35)",marginBottom:24,lineHeight:1.6}}>Tell us about your sustainability challenge. We'll come prepared.</p>
-          <form onSubmit={handleSubmit}>
+          <form ref={formRef} onSubmit={handleSubmit}>
             <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12,marginBottom:0}}>
               <div style={{marginBottom:13}}>
                 <label style={{display:"block",fontSize:10,fontWeight:700,letterSpacing:"0.09em",textTransform:"uppercase",color:"rgba(255,255,255,0.3)",marginBottom:6}}>Full Name</label>
-                <input type="text" placeholder="Your name" required style={inputStyle}
+                <input name="name" type="text" placeholder="Your name" required style={inputStyle}
                   onFocus={e=>{e.target.style.borderColor="rgba(58,158,122,0.4)";e.target.style.transform="scale(1)"}}
                   onBlur={e=>{e.target.style.borderColor="rgba(255,255,255,0.1)";e.target.style.transform="scale(0.98)"}}/>
               </div>
               <div style={{marginBottom:13}}>
                 <label style={{display:"block",fontSize:10,fontWeight:700,letterSpacing:"0.09em",textTransform:"uppercase",color:"rgba(255,255,255,0.3)",marginBottom:6}}>Company</label>
-                <input type="text" placeholder="Organisation" required style={inputStyle}
+                <input name="company" type="text" placeholder="Organisation" required style={inputStyle}
                   onFocus={e=>{e.target.style.borderColor="rgba(58,158,122,0.4)";e.target.style.transform="scale(1)"}}
                   onBlur={e=>{e.target.style.borderColor="rgba(255,255,255,0.1)";e.target.style.transform="scale(0.98)"}}/>
               </div>
             </div>
             <div style={{marginBottom:13}}>
               <label style={{display:"block",fontSize:10,fontWeight:700,letterSpacing:"0.09em",textTransform:"uppercase",color:"rgba(255,255,255,0.3)",marginBottom:6}}>Email</label>
-              <input type="email" placeholder="you@company.com" required style={inputStyle}
+              <input name="email" type="email" placeholder="you@company.com" required style={inputStyle}
                 onFocus={e=>{e.target.style.borderColor="rgba(58,158,122,0.4)";e.target.style.transform="scale(1)"}}
                 onBlur={e=>{e.target.style.borderColor="rgba(255,255,255,0.1)";e.target.style.transform="scale(0.98)"}}/>
             </div>
             <div style={{marginBottom:13}}>
               <label style={{display:"block",fontSize:10,fontWeight:700,letterSpacing:"0.09em",textTransform:"uppercase",color:"rgba(255,255,255,0.3)",marginBottom:6}}>Service Interest</label>
-              <select style={{...inputStyle,cursor:"pointer"}}
+              <select name="service" style={{...inputStyle,cursor:"pointer"}}
                 onFocus={e=>{e.target.style.borderColor="rgba(58,158,122,0.4)";e.target.style.transform="scale(1)"}}
                 onBlur={e=>{e.target.style.borderColor="rgba(255,255,255,0.1)";e.target.style.transform="scale(0.98)"}}>
                 <option value="">Select</option>
@@ -84,18 +110,19 @@ export default function Contact() {
             </div>
             <div style={{marginBottom:20}}>
               <label style={{display:"block",fontSize:10,fontWeight:700,letterSpacing:"0.09em",textTransform:"uppercase",color:"rgba(255,255,255,0.3)",marginBottom:6}}>Message</label>
-              <textarea placeholder="Describe your sustainability challenge..." style={{...inputStyle,minHeight:88,resize:"vertical"}}
+              <textarea name="message" placeholder="Describe your sustainability challenge..." style={{...inputStyle,minHeight:88,resize:"vertical"}}
                 onFocus={e=>{e.target.style.borderColor="rgba(58,158,122,0.4)";e.target.style.transform="scale(1)"}}
                 onBlur={e=>{e.target.style.borderColor="rgba(255,255,255,0.1)";e.target.style.transform="scale(0.98)"}}/>
             </div>
+            {error && <p style={{color:"#ff6b6b",fontSize:13,marginBottom:12,textAlign:"center"}}>{error}</p>}
             <button type="submit" disabled={sent} style={{
-              width:"100%",padding:14,background:sent?"#3db882":"#3A9E7A",color:"#050e1a",
+              width:"100%",padding:14,background:sent?"#2E7D4F":"#3A9E7A",color:"#fff",
               border:"none",borderRadius:8,cursor:sent?"wait":"pointer",fontFamily:"inherit",
               fontSize:14,fontWeight:800,letterSpacing:"0.04em",textTransform:"uppercase",
               transition:"all 0.2s", display:"flex", justifyContent:"center", alignItems:"center", gap:10
             }}>
-              {sent && <div style={{width:16,height:16,border:"2px solid #050e1a",borderTopColor:"transparent",borderRadius:"50%",animation:"spinRotation 0.6s linear infinite"}}/>}
-              {sent?"Sending...":"Send Message →"}
+              {sent && <div style={{width:16,height:16,border:"2px solid #fff",borderTopColor:"transparent",borderRadius:"50%",animation:"spinRotation 0.6s linear infinite"}}/>}
+              {sent ? "Sending..." : "Send Message →"}
             </button>
           </form>
         </div>

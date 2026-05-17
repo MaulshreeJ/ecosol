@@ -84,6 +84,7 @@ export default function Hero() {
             borderRadius: 7, fontSize: 15, fontWeight: 600, border: "1.5px solid rgba(255,255,255,0.22)",
             cursor: "pointer", transition: "all 0.2s"
           }}
+            onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
             onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.5)"; e.currentTarget.style.background = "rgba(255,255,255,0.06)" }}
             onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.22)"; e.currentTarget.style.background = "transparent" }}
           >
